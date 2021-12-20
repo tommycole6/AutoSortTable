@@ -4,15 +4,49 @@ sap.ui.define([
 	], 
 	function(Column, Renderer) {
 	"use strict";
-
+	/**
+	 * Constructor for a new SortableColumn.
+	 *
+	 * @param {string} [sId] Id for the new control, generated automatically if no id is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 *
+	 * @class
+	 * The <code>SortableColumn</code> extends the <code>sap.m.Column</code> control that automatically provides filtering and
+	 * sorting capabilities through a <code>sap.m.ResponsivePopover</code> attached to the header and is displayed when the column header is clicked. The developer
+	 * can use the default values defined in the parent <code>AutoSortTable> for displaying filtering, sorting or both for all columns, or can 
+	 * specify which is available in individual columns. The column provides icons to indicate of it is currently sorted or filtered.
+	 *
+	 * @extends sap.m.Column
+	 *
+	 * @author Tom Cole, Linx-AS, L.L.C.
+	 * @version 1.0.0
+	 *
+	 * @constructor
+	 * @public
+	 */
 	var SortableColumn = Column.extend("SortableColumn", {
 		metadata : {
 			properties: {
+				/**
+				 * The title for the <code>sap.m.ResponsivePopover</code> attached to this <code>SortableColumn</code>.
+				 * If no value is provided, the title property from the parent <code>AutoSortTable<code> is used.
+				 */
 				title: {type: "string", defaultValue: ""},
+				/**
+				 * Indicates if sorting buttons should be provided in the <code>sap.m.ResponsivePopover</code> attached to this <code>SortableColumn</code>.
+				 * If no value is provided, or if the useDefaults value is set to true, the shortSort property from the parent <code>AutoSortTable<code> is used.
+				 */
 				showSort: {type: "boolean", defaultValue: true},
+				/**
+				 * Indicates if the filter field should be provided in the <code>sap.m.ResponsivePopover</code> attached to this <code>SortableColumn</code>.
+				 * If no value is provided, or if the useDefaults value is set to true, the shortSort property from the parent <code>AutoSortTable<code> is used.
+				 */
 				showFilter: {type: "boolean", defaultValue: true},
-				useDefaults: {type: "boolean", defaultValue: true},
-				filterIndicator: {type: "string", defaultValue: "None"}
+				/**
+				 * Indicates if the values provided by the parent <code>AutoSortTable</code> should be used to define the properties for this <code>SortableColumn</code>.
+				 * If set to true, the other properties will be ignored.
+				 */
+				useDefaults: {type: "boolean", defaultValue: true}
 			}
 		},
 		_oTable: null,

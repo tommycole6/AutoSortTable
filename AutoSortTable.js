@@ -4,30 +4,94 @@ sap.ui.define([
 	], 
 	function(Table, Renderer) {
 	"use strict";
-
+	/**
+	 * Constructor for a new AutoSortTable.
+	 *
+	 * @param {string} [sId] Id for the new control, generated automatically if no id is given
+	 * @param {object} [mSettings] Initial settings for the new control
+	 *
+	 * @class
+	 * The <code>AutoSortTable</code> control provides a easy way to provide more advanced <code>sap.m.Table</code> that automatically provides filtering and
+	 * sorting capabilities through a <code>sap.m.ResponsivePopover</code> attached to the header and is displayed when the column header is clicked. The developer
+	 * can provide default values for displaying filtering, sorting or both for all columns, or can specify which is available in individual columns. 
+	 * The columns provide icons to indicate of that column is currently sorted or filtered.
+	 *
+	 * @extends sap.m.Table
+	 *
+	 * @author Tom Cole, Linx-AS, L.L.C.
+	 * @version 1.0.0
+	 *
+	 * @constructor
+	 * @public
+	 */
 	var AutoSortTable = Table.extend("AutoSortTable", {
 		metadata: {
 			properties: {
 				/** 
-				 * The following properties are global and apply to all columns in the table.
+				 * Indicates where the <code>sap.m.ResponsivePopover</code> will be displayed in relation to the column header.
 				 */
 				placement: {type: "sap.m.PlacementType", defaultValue: "Auto"},
+				/** 
+				 * The text to display on the ascending sort button.
+				 */
 				sortAscButtonText: {type: "string", defaultValue: "Sort Ascending"},
+				/** 
+				 * The text to display on the descending sort button.
+				 */
 				sortDescButtonText: {type: "string", defaultValue: "Sort Descending"},
+				/** 
+				 * Denotes the number of fixed rows to leave unaffected by sorting or filtering.
+				 */
 				fixedBottomRowCount: {type: "int", defaultValue: 0},
+				/** 
+				 * Indicates if the table should be zebra stripped.
+				 */
 				zebraStripe: {type: "boolean", defaultValue: false},
+				/** 
+				 * Color for even rows.
+				 * 
+				 * NOTE: If zebraStripe is set to false, this property is ignored.
+				 */
 				evenRowColor: {type: "string", defaultValue: "white"},
+				/** 
+				 * Color for odd rows.
+				 * 
+				 * NOTE: If zebraStripe is set to false, this property is ignored.
+				 */
 				oddRowColor: {type: "string", defaultValue: "lightgray"},
+				/** 
+				 * Color for total row(s) as indicated by the value defined in the property fixedBottomRowCount.
+				 * 
+				 * NOTE: If zebraStripe is set to false, this property is ignored.
+				 */
 				totalRowColor: {type: "string", defaultValue: "darkgray"},
+				/** 
+				 * The text to display as the placeholder in the filter field.
+				 */
 				filterPlaceholder: {type: "string", defaultValue: "Enter filter..."},
 				/**
-				 * The following properties are used as defaults. Individual SortableColumns
-				 * can overwrite these values to customize their popup options.
+				 * The default title to display on the <code>sap.m.ResponsivePopover. 
+				 * 
+				 * NOTE: You can override this value in the properties for each <code>SortableColumn</code>
 				 */
 				title: {type: "string", defaultValue: "Options"},
+				/**
+				 * The default property to indicate if sort buttons should be displayed in the <code>sap.m.ResponsivePopover</code>. 
+				 * 
+				 * NOTE: You can override this value in the properties for each <code>SortableColumn</code>
+				 */
 				showSort: {type: "boolean", defaultValue: true},
+				/**
+				 * The default property to indicate if the filter field should be displayed in the <code>sap.m.ResponsivePopover</code>. 
+				 * 
+				 * NOTE: You can override this value in the properties for each <code>SortableColumn</code>
+				 */
 				showFilter: {type: "boolean", defaultValue: true}
 			},
+			/**
+			 * Defines the <code>SortableColumns</code> that should be displayed in the table. These columns will automatically provide a
+			 * <code>sap.m.ResponsivePopover</code> when the user clicks on the header.
+			 */
 			aggregations: {
 				columns: { type : "SortableColumn", multiple : true, singularName : "column" }
 			}
@@ -42,7 +106,7 @@ sap.ui.define([
 				that._clearSorts();
 			});
 		},
-		getSortableColumns: function() {
+		_getSortableColumns: function() {
 			var aColumns = this.getAggregation("columns");
 			return aColumns;
 		},
@@ -116,7 +180,7 @@ sap.ui.define([
 				this._stripeTable();
 			}
 			
-			this.getSortableColumns().forEach(function(oColumn, order) {
+			this._getSortableColumns().forEach(function(oColumn, order) {
 				if (oColumn.getAggregation("header").$().length > 0) {
 					if (oColumn._isFiltered()) {
 						oColumn.getAggregation("header").$()[0].classList.add("filteredColumn");
