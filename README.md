@@ -5,5 +5,5 @@ The most basic example to export all properties and rows on a single click is
 
 ```XML
 <comp:AutoSortTable items="{/users}"/>
-
+```
 You can find more examples and documentation in the [AutoSortTable.pdf](https://github.com/tommycole6/AutoSortTable/blob/main/AutoSortTable.pdf) file included in the distribution.
