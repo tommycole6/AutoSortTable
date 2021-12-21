@@ -14,7 +14,7 @@ The most basic example to export all properties and rows on a single click is
          ...
          xmmlns:comp="my.namespace.components">
    ```
-3. Add the AutoSorttable to your XML view
+3. Add the AutoSortTable to your XML view
    ```XML
    <comp:AutoSortTable>
      ...
